@@ -13,6 +13,8 @@
 		A9CAE0401B0D93070030CEF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CAE03F1B0D93070030CEF9 /* Images.xcassets */; };
 		A9CAE0431B0D93070030CEF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9CAE0411B0D93070030CEF9 /* LaunchScreen.xib */; };
 		A9CAE04F1B0D93070030CEF9 /* ExampleProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CAE04E1B0D93070030CEF9 /* ExampleProjectTests.swift */; };
+		A9CAE05B1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CAE05A1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m */; };
+		A9CAE05D1B0DA0AD0030CEF9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CAE05C1B0DA0AD0030CEF9 /* CommentCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,10 @@
 		A9CAE0481B0D93070030CEF9 /* ExampleProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9CAE04D1B0D93070030CEF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9CAE04E1B0D93070030CEF9 /* ExampleProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleProjectTests.swift; sourceTree = "<group>"; };
+		A9CAE0581B0D9B6A0030CEF9 /* ExampleProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ExampleProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		A9CAE0591B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		A9CAE05A1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		A9CAE05C1B0DA0AD0030CEF9 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +83,16 @@
 		A9CAE0351B0D93070030CEF9 /* ExampleProject */ = {
 			isa = PBXGroup;
 			children = (
+				A9CAE0591B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.h */,
+				A9CAE05A1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m */,
 				A9CAE0381B0D93070030CEF9 /* AppDelegate.swift */,
 				A9CAE03A1B0D93070030CEF9 /* ViewController.swift */,
+				A9CAE05C1B0DA0AD0030CEF9 /* CommentCell.swift */,
 				A9CAE03C1B0D93070030CEF9 /* Main.storyboard */,
 				A9CAE03F1B0D93070030CEF9 /* Images.xcassets */,
 				A9CAE0411B0D93070030CEF9 /* LaunchScreen.xib */,
 				A9CAE0361B0D93070030CEF9 /* Supporting Files */,
+				A9CAE0581B0D9B6A0030CEF9 /* ExampleProject-Bridging-Header.h */,
 			);
 			path = ExampleProject;
 			sourceTree = "<group>";
@@ -212,8 +222,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9CAE05B1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				A9CAE03B1B0D93070030CEF9 /* ViewController.swift in Sources */,
 				A9CAE0391B0D93070030CEF9 /* AppDelegate.swift in Sources */,
+				A9CAE05D1B0DA0AD0030CEF9 /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,9 +350,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ExampleProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ExampleProject/ExampleProject-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -348,9 +363,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ExampleProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ExampleProject/ExampleProject-Bridging-Header.h";
 			};
 			name = Release;
 		};
