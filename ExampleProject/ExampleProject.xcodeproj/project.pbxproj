@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A97502061B0E491400C6302A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97502051B0E491400C6302A /* UIKit.framework */; };
+		A975020D1B0E5ECF00C6302A /* BHExpandingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = A97502081B0E5ECF00C6302A /* BHExpandingTextView.m */; };
+		A975020E1B0E5ECF00C6302A /* BHExpandingTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = A975020A1B0E5ECF00C6302A /* BHExpandingTextViewInternal.m */; };
+		A975020F1B0E5ECF00C6302A /* BHInputToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A975020C1B0E5ECF00C6302A /* BHInputToolbar.m */; };
 		A9CAE0391B0D93070030CEF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CAE0381B0D93070030CEF9 /* AppDelegate.swift */; };
 		A9CAE03B1B0D93070030CEF9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CAE03A1B0D93070030CEF9 /* ViewController.swift */; };
 		A9CAE03E1B0D93070030CEF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9CAE03C1B0D93070030CEF9 /* Main.storyboard */; };
 		A9CAE0401B0D93070030CEF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CAE03F1B0D93070030CEF9 /* Images.xcassets */; };
 		A9CAE0431B0D93070030CEF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9CAE0411B0D93070030CEF9 /* LaunchScreen.xib */; };
 		A9CAE04F1B0D93070030CEF9 /* ExampleProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CAE04E1B0D93070030CEF9 /* ExampleProjectTests.swift */; };
-		A9CAE05B1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CAE05A1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m */; };
 		A9CAE05D1B0DA0AD0030CEF9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CAE05C1B0DA0AD0030CEF9 /* CommentCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +31,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A97502051B0E491400C6302A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A97502071B0E5ECF00C6302A /* BHExpandingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHExpandingTextView.h; sourceTree = "<group>"; };
+		A97502081B0E5ECF00C6302A /* BHExpandingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHExpandingTextView.m; sourceTree = "<group>"; };
+		A97502091B0E5ECF00C6302A /* BHExpandingTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHExpandingTextViewInternal.h; sourceTree = "<group>"; };
+		A975020A1B0E5ECF00C6302A /* BHExpandingTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHExpandingTextViewInternal.m; sourceTree = "<group>"; };
+		A975020B1B0E5ECF00C6302A /* BHInputToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHInputToolbar.h; sourceTree = "<group>"; };
+		A975020C1B0E5ECF00C6302A /* BHInputToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInputToolbar.m; sourceTree = "<group>"; };
 		A9CAE0331B0D93070030CEF9 /* ExampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9CAE0371B0D93070030CEF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9CAE0381B0D93070030CEF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,8 +49,6 @@
 		A9CAE04D1B0D93070030CEF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9CAE04E1B0D93070030CEF9 /* ExampleProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleProjectTests.swift; sourceTree = "<group>"; };
 		A9CAE0581B0D9B6A0030CEF9 /* ExampleProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ExampleProject-Bridging-Header.h"; sourceTree = "<group>"; };
-		A9CAE0591B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
-		A9CAE05A1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		A9CAE05C1B0DA0AD0030CEF9 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A97502061B0E491400C6302A /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,7 @@
 		A9CAE02A1B0D93070030CEF9 = {
 			isa = PBXGroup;
 			children = (
+				A97502051B0E491400C6302A /* UIKit.framework */,
 				A9CAE0351B0D93070030CEF9 /* ExampleProject */,
 				A9CAE04B1B0D93070030CEF9 /* ExampleProjectTests */,
 				A9CAE0341B0D93070030CEF9 /* Products */,
@@ -83,8 +93,12 @@
 		A9CAE0351B0D93070030CEF9 /* ExampleProject */ = {
 			isa = PBXGroup;
 			children = (
-				A9CAE0591B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.h */,
-				A9CAE05A1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m */,
+				A97502071B0E5ECF00C6302A /* BHExpandingTextView.h */,
+				A97502081B0E5ECF00C6302A /* BHExpandingTextView.m */,
+				A97502091B0E5ECF00C6302A /* BHExpandingTextViewInternal.h */,
+				A975020A1B0E5ECF00C6302A /* BHExpandingTextViewInternal.m */,
+				A975020B1B0E5ECF00C6302A /* BHInputToolbar.h */,
+				A975020C1B0E5ECF00C6302A /* BHInputToolbar.m */,
 				A9CAE0381B0D93070030CEF9 /* AppDelegate.swift */,
 				A9CAE03A1B0D93070030CEF9 /* ViewController.swift */,
 				A9CAE05C1B0DA0AD0030CEF9 /* CommentCell.swift */,
@@ -222,10 +236,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9CAE05B1B0D9B6A0030CEF9 /* TPKeyboardAvoidingScrollView.m in Sources */,
+				A975020E1B0E5ECF00C6302A /* BHExpandingTextViewInternal.m in Sources */,
 				A9CAE03B1B0D93070030CEF9 /* ViewController.swift in Sources */,
 				A9CAE0391B0D93070030CEF9 /* AppDelegate.swift in Sources */,
+				A975020F1B0E5ECF00C6302A /* BHInputToolbar.m in Sources */,
 				A9CAE05D1B0DA0AD0030CEF9 /* CommentCell.swift in Sources */,
+				A975020D1B0E5ECF00C6302A /* BHExpandingTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +440,7 @@
 				A9CAE0541B0D93070030CEF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A9CAE0551B0D93070030CEF9 /* Build configuration list for PBXNativeTarget "ExampleProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -432,6 +449,7 @@
 				A9CAE0571B0D93070030CEF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

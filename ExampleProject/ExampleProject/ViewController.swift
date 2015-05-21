@@ -8,15 +8,21 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDataSource {
+class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDelegate {
 
-    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var scrollView: UIView!
     @IBOutlet weak var tblComment: UITableView!
     @IBOutlet weak var txtComment: UITextField!
+    var inputToolbar : BHInputToolbar?
     var tableData = [String]()
+    let kStatusBarHeight: CGFloat = 20
+    let kDefaultToolbarHeight: CGFloat = 40
+    let kKeyboardHeightPortrait: CGFloat = 216
+    let kKeyboardHeightLandscape: CGFloat = 140
+    var keyboardIsVisible :Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.scrollView.bounces = true
+//        self.scrollView.bounces = true
         self.tblComment.separatorColor = UIColor.clearColor()
         
         var label = UILabel()
@@ -25,6 +31,14 @@ class ViewController: UIViewController,UITableViewDataSource {
         label.sizeToFit()
         self.tblComment.tableFooterView = label
         // Do any additional setup after loading the view, typically from a nib.
+        
+        var screenFrame = UIScreen.mainScreen().bounds
+        self.inputToolbar = BHInputToolbar(frame: CGRectMake(0, screenFrame.size.height-kDefaultToolbarHeight - 44.0, screenFrame.size.width, kDefaultToolbarHeight))
+        self.scrollView.addSubview(self.inputToolbar!)
+        
+        self.inputToolbar?.inputDelegate = self;
+        self.inputToolbar?.textView.placeholder = "Comment";
+        self.inputToolbar?.textView.maximumNumberOfLines = 4
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,5 +105,74 @@ class ViewController: UIViewController,UITableViewDataSource {
 
     @IBAction func btnFinalAnswerClicked(sender: AnyObject) {
     }
+    
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        var screenFrame = UIScreen.mainScreen().bounds
+        var r = self.inputToolbar?.frame as CGRect!
+        var frameHeight : CGFloat = self.inputToolbar?.frame.size.height as CGFloat!
+        if UIInterfaceOrientationIsPortrait(toInterfaceOrientation){
+            
+            r.origin.y = screenFrame.size.height - frameHeight - kStatusBarHeight
+            if (keyboardIsVisible) {
+                r.origin.y -= kKeyboardHeightPortrait;
+            }
+            self.inputToolbar?.textView.maximumNumberOfLines = 4
+        }else{
+             r.origin.y = screenFrame.size.width - frameHeight - kStatusBarHeight
+            if (keyboardIsVisible) {
+                r.origin.y -= kKeyboardHeightLandscape;
+            }
+            self.inputToolbar?.textView.maximumNumberOfLines = 7
+            self.inputToolbar?.textView.sizeToFit()
+        }
+        self.inputToolbar?.frame = r
+    }
+    
+    func inputButtonPressed(inputText: String!) {
+        self.tableData.append(inputText)
+        self.tblComment.reloadData()
+    }
+    
+    func keyboardWillShow(notification:NSNotification){
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(0.3)
+        var frame : CGRect = self.inputToolbar?.frame as CGRect!
+        if UIInterfaceOrientationIsPortrait(self.interfaceOrientation){
+            frame.origin.y = self.view.frame.size.height - frame.size.height - kKeyboardHeightPortrait
+        }else{
+            frame.origin.y = self.view.frame.size.width - frame.size.height - kKeyboardHeightLandscape - kStatusBarHeight
+        }
+        self.inputToolbar?.frame = frame;
+        UIView.commitAnimations();
+        keyboardIsVisible = true;
+    }
+    
+    func keyboardWillHide(notification:NSNotification){
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(0.3)
+        var frame : CGRect = self.inputToolbar?.frame as CGRect!
+        if UIInterfaceOrientationIsPortrait(self.interfaceOrientation){
+            frame.origin.y = self.view.frame.size.height - frame.size.height
+        }else{
+            frame.origin.y = self.view.frame.size.width - frame.size.height
+        }
+        self.inputToolbar?.frame = frame;
+        UIView.commitAnimations();
+        keyboardIsVisible = false;
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        /* No longer listen for keyboard */
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+
+    }
+
+
 }
 
