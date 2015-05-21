@@ -68,7 +68,7 @@
 		self.internalTextView = [[BHExpandingTextViewInternal alloc] initWithFrame:textViewFrame];
 		self.internalTextView.delegate        = self;
 		self.internalTextView.font            = [UIFont systemFontOfSize:15.0];
-		self.internalTextView.contentInset    = UIEdgeInsetsMake(-2,0,-2,0);
+		self.internalTextView.contentInset    = UIEdgeInsetsMake(-4,0,-4,0);
         self.internalTextView.text            = @"-";
 		self.internalTextView.scrollEnabled   = NO;
         self.internalTextView.opaque          = NO;

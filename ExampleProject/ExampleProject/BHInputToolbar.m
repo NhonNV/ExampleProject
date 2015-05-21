@@ -27,11 +27,11 @@
 
 @implementation BHInputToolbar
 
--(void)inputButtonPressed
+-(void)inputButtonPressed:(BOOL) isFaked
 {
-    if ([self.inputDelegate respondsToSelector:@selector(inputButtonPressed:)])
+    if ([self.inputDelegate respondsToSelector:@selector(inputButtonPressed:fakeClick:)])
     {
-        [self.inputDelegate inputButtonPressed:self.textView.text];
+        [self.inputDelegate inputButtonPressed:self.textView.text fakeClick:isFaked];
     }
 
     /* Remove the keyboard and clear the text */
@@ -57,7 +57,7 @@
 
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setTitle:buttonLabel forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(inputButtonPressed) forControlEvents:UIControlEventTouchDown];
+    [button addTarget:self action:@selector(inputButtonPressed:) forControlEvents:UIControlEventTouchDown];
     [button sizeToFit];
 
     self.inputButton = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -66,23 +66,24 @@
     self.inputButton.enabled = NO;
 
     /* Create UIExpandingTextView input */
-    self.textView = [[BHExpandingTextView alloc] initWithFrame:CGRectMake(7, 7, self.bounds.size.width - 84, 26)];
+    self.textView = [[BHExpandingTextView alloc] initWithFrame:CGRectMake(27, 7, self.bounds.size.width - 84-20, 26)];
     self.textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(4.0f, 0.0f,-10.0f, 0.0f);
     self.textView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
     self.textView.delegate = self;
     [self addSubview:self.textView];
 
     /* Right align the toolbar button */
+    UIBarButtonItem *toggleItem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:UIBarButtonItemStyleDone target:nil action:nil];
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
-    NSArray *items = [NSArray arrayWithObjects: flexItem, self.inputButton, nil];
+    NSArray *items = [NSArray arrayWithObjects: toggleItem,flexItem, self.inputButton, nil];
     [self setItems:items animated:NO];
 }
 
 -(id)initWithFrame:(CGRect)frame
 {
     if ((self = [super initWithFrame:frame])) {
-        [self setupToolbar:@"Send"];
+        [self setupToolbar:@"Post"];
     }
     return self;
 }
@@ -90,7 +91,7 @@
 -(id)init
 {
     if ((self = [super init])) {
-        [self setupToolbar:@"Send"];
+        [self setupToolbar:@"Post"];
     }
     return self;
 }
@@ -107,7 +108,9 @@
     self.inputButton.customView.frame = i;
 }
 
-
+- (void) fakeClick{
+    [self inputButtonPressed:YES];
+}
 
 #pragma mark -
 #pragma mark UIExpandingTextView delegate

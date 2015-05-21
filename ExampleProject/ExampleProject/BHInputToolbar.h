@@ -28,12 +28,13 @@
 
 @protocol BHInputToolbarDelegate <BHExpandingTextViewDelegate>
 @optional
--(void)inputButtonPressed:(NSString *)inputText;
+-(void)inputButtonPressed:(NSString *)inputText fakeClick:(BOOL) isFaked;
 @end
 
 @interface BHInputToolbar : UIToolbar <BHExpandingTextViewDelegate>
 
 - (void)drawRect:(CGRect)rect;
+- (void) fakeClick;
 
 @property (nonatomic, strong) BHExpandingTextView *textView;
 @property (nonatomic, strong) UIBarButtonItem *inputButton;
