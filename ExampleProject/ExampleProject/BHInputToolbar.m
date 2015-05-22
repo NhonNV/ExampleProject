@@ -39,6 +39,18 @@
     [self.textView clearText];
 }
 
+-(void)inputButtonPressed
+{
+    if ([self.inputDelegate respondsToSelector:@selector(inputButtonPressed:fakeClick:)])
+    {
+        [self.inputDelegate inputButtonPressed:self.textView.text fakeClick:NO];
+    }
+    
+    /* Remove the keyboard and clear the text */
+    [self.textView resignFirstResponder];
+    [self.textView clearText];
+}
+
 -(void)setupToolbar:(NSString *)buttonLabel
 {
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
@@ -57,7 +69,7 @@
 
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setTitle:buttonLabel forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(inputButtonPressed:) forControlEvents:UIControlEventTouchDown];
+    [button addTarget:self action:@selector(inputButtonPressed) forControlEvents:UIControlEventTouchDown];
     [button sizeToFit];
 
     self.inputButton = [[UIBarButtonItem alloc] initWithCustomView:button];

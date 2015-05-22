@@ -147,6 +147,15 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         }
         self.tblComment.reloadData()
     }
+    
+    func expandingTextView(expandingTextView: BHExpandingTextView!, didChangeHeight height: Float) {
+        if self.toolbar != nil{
+            var frame : CGRect =  self.inputToolbar?.frame as CGRect!
+            var toolbarFrame = self.toolbar?.frame as CGRect!
+            toolbarFrame.origin.y = frame.origin.y - kDefaultToolbarHeight
+            self.toolbar?.frame = toolbarFrame
+        }
+    }
 
     func btnFinalAnswerClicked(sender: AnyObject) {
         self.inputToolbar?.fakeClick()
