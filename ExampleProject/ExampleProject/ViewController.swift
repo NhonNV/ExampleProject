@@ -20,6 +20,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
     let kKeyboardHeightPortrait: CGFloat = 216
     let kKeyboardHeightLandscape: CGFloat = 140
     var keyboardIsVisible :Bool = true
+    var isFinalAnswer :Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.scrollView.bounces = true
@@ -140,12 +141,17 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
     }
     
     func inputButtonPressed(inputText: String!, fakeClick isFaked: Bool) {
-        if isFaked{
+        var index: Int = 0
+        if isFinalAnswer{
             self.tableData.insert(inputText, atIndex: 0)
+            
         }else{
             self.tableData.append(inputText)
+            index = self.tableData.count-1
         }
         self.tblComment.reloadData()
+        self.tblComment.scrollToRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+        
     }
     
     func expandingTextView(expandingTextView: BHExpandingTextView!, didChangeHeight height: Float) {
@@ -158,7 +164,18 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
     }
 
     func btnFinalAnswerClicked(sender: AnyObject) {
-        self.inputToolbar?.fakeClick()
+        isFinalAnswer = !isFinalAnswer
+        var button : UIBarButtonItem = sender as UIBarButtonItem
+        if isFinalAnswer{
+            button.tintColor = UIColor.greenColor()
+        }else{
+            button.tintColor = UIColor(red: 0, green: 122.0/255.0, blue: 1, alpha: 1.0)
+        }
+        
+    }
+    
+    func hideTopBar(hide: Bool) {
+        self.toolbar?.hidden = hide;
     }
     
     func keyboardWillShow(notification:NSNotification){

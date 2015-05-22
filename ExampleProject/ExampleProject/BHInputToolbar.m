@@ -85,10 +85,12 @@
     [self addSubview:self.textView];
 
     /* Right align the toolbar button */
-    UIBarButtonItem *toggleItem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:UIBarButtonItemStyleDone target:nil action:nil];
+    
+    self.toggleItem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:UIBarButtonItemStylePlain target:nil action:@selector(toggleAction)];
+
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
-    NSArray *items = [NSArray arrayWithObjects: toggleItem,flexItem, self.inputButton, nil];
+    NSArray *items = [NSArray arrayWithObjects: self.toggleItem,flexItem, self.inputButton, nil];
     [self setItems:items animated:NO];
 }
 
@@ -122,6 +124,14 @@
 
 - (void) fakeClick{
     [self inputButtonPressed:YES];
+}
+
+- (void) toggleAction{
+    if ([self.inputDelegate respondsToSelector:@selector(hideTopBar:)])
+    {
+        hideTopbar = !hideTopbar;
+        [self.inputDelegate hideTopBar:hideTopbar];
+    }
 }
 
 #pragma mark -
