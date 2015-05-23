@@ -61,14 +61,14 @@
 		CGRect backgroundFrame = frame;
         backgroundFrame.origin.y = 0;
 		backgroundFrame.origin.x = 0;
-
+        
         CGRect textViewFrame = CGRectInset(backgroundFrame, kTextInsetX, 0);
 
         /* Internal Text View component */
 		self.internalTextView = [[BHExpandingTextViewInternal alloc] initWithFrame:textViewFrame];
 		self.internalTextView.delegate        = self;
 		self.internalTextView.font            = [UIFont systemFontOfSize:15.0];
-		self.internalTextView.contentInset    = UIEdgeInsetsMake(-4,0,-4,0);
+		self.internalTextView.contentInset    = UIEdgeInsetsMake(0,0,0,0);
         self.internalTextView.text            = @"-";
 		self.internalTextView.scrollEnabled   = NO;
         self.internalTextView.opaque          = NO;
@@ -77,7 +77,6 @@
         [self.internalTextView sizeToFit];
         self.internalTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.internalTextView.autocorrectionType = UITextAutocorrectionTypeNo;
-        
 
         /* set placeholder */
         self.placeholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(8,3,self.bounds.size.width - 16,self.bounds.size.height)];
@@ -256,6 +255,11 @@
     _minimumNumberOfLines = m;
 }
 
+- (NSInteger) getHeight{
+    CGFloat width = self.internalTextView.frame.size.width; // whatever your desired width is
+    CGRect rect = [self.internalTextView.attributedText boundingRectWithSize:CGSizeMake(width, 10000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
+    return rect.size.height+18.0;
+}
 
 - (void)textViewDidChange:(UITextView *)textView
 {
@@ -265,11 +269,13 @@
         self.placeholderLabel.alpha = 0;
 
 	NSInteger newHeight;
-    if(floor(NSFoundationVersionNumber)>NSFoundationVersionNumber_iOS_6_1) {
+    /*if(floor(NSFoundationVersionNumber)>NSFoundationVersionNumber_iOS_6_1) {
         newHeight = [self measureHeightOfUITextView:self.internalTextView];
     }else {
         newHeight = self.internalTextView.contentSize.height;
-    }
+    }*/
+    
+    newHeight = [self getHeight];
 
 	if(newHeight < self.minimumHeight || !self.internalTextView.hasText)
     {

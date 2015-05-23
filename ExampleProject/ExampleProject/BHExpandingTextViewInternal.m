@@ -48,6 +48,14 @@
 	[super setContentOffset:s];
 }
 
+- (void) setAttributedText:(NSAttributedString *)attributedText{
+    UIFont *font = [UIFont fontWithName:@"Helvetica" size:17];
+    [[[NSMutableAttributedString alloc] initWithAttributedString:attributedText] addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [attributedText length])];
+    self.font = font;
+    [super setAttributedText:attributedText];
+    [self.delegate textViewDidChange:self];
+}
+
 -(void)setContentInset:(UIEdgeInsets)s
 {
 	UIEdgeInsets edgeInsets = s;

@@ -14,7 +14,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
     @IBOutlet weak var tblComment: UITableView!
     var toolbar: UIToolbar?
     var inputToolbar : BHInputToolbar?
-    var tableData = [String]()
+    var tableData = [NSAttributedString]()
     let kStatusBarHeight: CGFloat = 20
     let kDefaultToolbarHeight: CGFloat = 44
     let kKeyboardHeightPortrait: CGFloat = 216
@@ -39,7 +39,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         
         self.inputToolbar?.inputDelegate = self;
         self.inputToolbar?.textView.placeholder = "Comment";
-        self.inputToolbar?.textView.maximumNumberOfLines = 4
+        self.inputToolbar?.textView.maximumNumberOfLines = 11
         createToolbar()
         
     }
@@ -54,7 +54,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         self.toolbar = UIToolbar(frame: CGRectMake(0, (self.inputToolbar?.frame.origin.y)! - kDefaultToolbarHeight, self.view!.frame.size.width, kDefaultToolbarHeight))
 
         /* Right align the toolbar button */
-        var cameraItem : UIBarButtonItem = UIBarButtonItem(title: "Camera", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        var cameraItem : UIBarButtonItem = UIBarButtonItem(title: "Camera", style: UIBarButtonItemStyle.Plain, target: nil, action: "cameraAction")
         var fileAttachItem : UIBarButtonItem = UIBarButtonItem(title: "File Attach", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         var finalAnswerItem : UIBarButtonItem = UIBarButtonItem(title: "Final Answer", style: UIBarButtonItemStyle.Plain, target: nil, action: "btnFinalAnswerClicked:")
         var flexItem : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
@@ -64,12 +64,29 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         self.scrollView.addSubview(self.toolbar!)
     }
     
-    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+    func cameraAction(){
+        var attributedString : NSMutableAttributedString = NSMutableAttributedString(string:  "")
+        var textAttachment : NSTextAttachment = NSTextAttachment()
+        textAttachment.image = UIImage(named: "test")
+        
+        var oldWidth : CGFloat = textAttachment.image?.size.width as CGFloat!
+        
+        //I'm subtracting 10px to make the image display nicely, accounting
+        //for the padding inside the textView
+        var scaleFactor : CGFloat = oldWidth / ((self.inputToolbar?.textView.internalTextView.frame.size.width)! - 10)
+        textAttachment.image = UIImage(CGImage: textAttachment.image?.CGImage, scale: scaleFactor, orientation: UIImageOrientation.Up)
+        
+        var attrStringWithImage : NSAttributedString = NSAttributedString(attachment: textAttachment)
+        attributedString.replaceCharactersInRange(NSMakeRange(0, 0), withAttributedString: attrStringWithImage)
+        self.inputToolbar?.textView.internalTextView.attributedText = attributedString
+    }
+    
+    func heightForView(text:NSAttributedString, font:UIFont, width:CGFloat) -> CGFloat{
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.ByWordWrapping
         label.font = font
-        label.text = text
+        label.attributedText = text
         
         label.sizeToFit()
         return label.frame.height
@@ -104,7 +121,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.ByWordWrapping
         label.textAlignment = NSTextAlignment.Left
-        label.text = self.tableData[indexPath.row]
+        label.attributedText = self.tableData[indexPath.row]
         
         var view = UIView(frame: CGRectMake(0, 5, 288, height+10))
         view.addSubview(label)
@@ -140,7 +157,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         self.inputToolbar?.frame = r
     }
     
-    func inputButtonPressed(inputText: String!, fakeClick isFaked: Bool) {
+    func inputButtonPressed(inputText: NSAttributedString!, fakeClick isFaked: Bool) {
         var index: Int = 0
         if isFinalAnswer{
             self.tableData.insert(inputText, atIndex: 0)

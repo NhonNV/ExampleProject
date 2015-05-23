@@ -31,7 +31,7 @@
 {
     if ([self.inputDelegate respondsToSelector:@selector(inputButtonPressed:fakeClick:)])
     {
-        [self.inputDelegate inputButtonPressed:self.textView.text fakeClick:isFaked];
+        [self.inputDelegate inputButtonPressed:self.textView.internalTextView.attributedText fakeClick:isFaked];
     }
 
     /* Remove the keyboard and clear the text */
@@ -43,7 +43,7 @@
 {
     if ([self.inputDelegate respondsToSelector:@selector(inputButtonPressed:fakeClick:)])
     {
-        [self.inputDelegate inputButtonPressed:self.textView.text fakeClick:NO];
+        [self.inputDelegate inputButtonPressed:self.textView.internalTextView.attributedText fakeClick:NO];
     }
     
     /* Remove the keyboard and clear the text */

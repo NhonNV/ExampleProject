@@ -28,7 +28,7 @@
 
 @protocol BHInputToolbarDelegate <BHExpandingTextViewDelegate>
 @optional
--(void)inputButtonPressed:(NSString *)inputText fakeClick:(BOOL) isFaked;
+-(void)inputButtonPressed:(NSAttributedString *)inputText fakeClick:(BOOL) isFaked;
 -(void)hideTopBar:(BOOL) hide;
 @end
 
