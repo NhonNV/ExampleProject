@@ -65,7 +65,9 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
     }
     
     func cameraAction(){
-        var attributedString : NSMutableAttributedString = NSMutableAttributedString(string:  "")
+        var text : String  = (self.inputToolbar?.textView.internalTextView.text) as String!
+        var count : Int = countElements(text)
+        var attributedString : NSMutableAttributedString = NSMutableAttributedString(string:  text)
         var textAttachment : NSTextAttachment = NSTextAttachment()
         textAttachment.image = UIImage(named: "test")
         
@@ -77,7 +79,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         textAttachment.image = UIImage(CGImage: textAttachment.image?.CGImage, scale: scaleFactor, orientation: UIImageOrientation.Up)
         
         var attrStringWithImage : NSAttributedString = NSAttributedString(attachment: textAttachment)
-        attributedString.replaceCharactersInRange(NSMakeRange(0, 0), withAttributedString: attrStringWithImage)
+        attributedString.replaceCharactersInRange(NSMakeRange(count, 0), withAttributedString: attrStringWithImage)
         self.inputToolbar?.textView.internalTextView.attributedText = attributedString
     }
     
