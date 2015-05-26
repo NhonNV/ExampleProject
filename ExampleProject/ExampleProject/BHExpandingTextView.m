@@ -116,7 +116,7 @@
         /* No need to resize is text is not empty */
         return;
     }
-    r.size.height = self.minimumHeight + kTextInsetBottom;
+//    r.size.height = self.minimumHeight + kTextInsetBottom;
     self.frame = r;
 }
 

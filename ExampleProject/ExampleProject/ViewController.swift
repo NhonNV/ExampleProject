@@ -8,10 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDelegate {
-
+class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,BHInputToolbarDelegate {
+    
     @IBOutlet var scrollView: UIView!
-    @IBOutlet weak var tblComment: UITableView!
+    var tblComment: UITableView!
     var toolbar: UIToolbar?
     var inputToolbar : BHInputToolbar?
     var tableData = [NSAttributedString]()
@@ -23,7 +23,11 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
     var isFinalAnswer :Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.scrollView.bounces = true
+        //        self.scrollView.bounces = true
+        self.tblComment = UITableView(frame: CGRectMake(0, 155, self.view.frame.width, 10), style: UITableViewStyle.Plain)
+        self.tblComment.registerClass(CommentCell.classForCoder(), forCellReuseIdentifier: "CommentCell")
+        self.tblComment.dataSource = self
+        self.tblComment.delegate = self
         self.tblComment.separatorColor = UIColor.clearColor()
         
         var label = UILabel()
@@ -35,7 +39,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         
         var screenFrame = UIScreen.mainScreen().bounds
         self.inputToolbar = BHInputToolbar(frame: CGRectMake(0, screenFrame.size.height-kDefaultToolbarHeight, screenFrame.size.width, kDefaultToolbarHeight))
-        self.scrollView.addSubview(self.inputToolbar!)
+
         
         self.inputToolbar?.inputDelegate = self;
         self.inputToolbar?.textView.placeholder = "Comment";
@@ -43,30 +47,37 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         createToolbar()
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
+        
         // Dispose of any resources that can be recreated.
     }
     
     func createToolbar(){
         self.toolbar = UIToolbar(frame: CGRectMake(0, (self.inputToolbar?.frame.origin.y)! - kDefaultToolbarHeight, self.view!.frame.size.width, kDefaultToolbarHeight))
-
+        
         /* Right align the toolbar button */
         var cameraItem : UIBarButtonItem = UIBarButtonItem(title: "Camera", style: UIBarButtonItemStyle.Plain, target: nil, action: "cameraAction")
         var fileAttachItem : UIBarButtonItem = UIBarButtonItem(title: "File Attach", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         var finalAnswerItem : UIBarButtonItem = UIBarButtonItem(title: "Final Answer", style: UIBarButtonItemStyle.Plain, target: nil, action: "btnFinalAnswerClicked:")
         var flexItem : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
+        var tableViewFrame = self.tblComment.frame as CGRect!
+        tableViewFrame.size.height = (self.toolbar?.frame.origin.y)! - tableViewFrame.origin.y
+        self.tblComment.frame = tableViewFrame
+        self.scrollView.addSubview(self.tblComment)
+        
+        self.scrollView.addSubview(self.inputToolbar!)
+        
         var items : NSArray = [cameraItem,flexItem,fileAttachItem,flexItem,finalAnswerItem]
-        self.toolbar?.setItems(items, animated: false)
+        self.toolbar?.setItems(items as [AnyObject], animated: false)
         self.scrollView.addSubview(self.toolbar!)
+        
     }
     
     func cameraAction(){
         var text : String  = (self.inputToolbar?.textView.internalTextView.text) as String!
-        var count : Int = countElements(text)
         var attributedString : NSMutableAttributedString = NSMutableAttributedString(string:  text)
         var textAttachment : NSTextAttachment = NSTextAttachment()
         textAttachment.image = UIImage(named: "test")
@@ -79,7 +90,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         textAttachment.image = UIImage(CGImage: textAttachment.image?.CGImage, scale: scaleFactor, orientation: UIImageOrientation.Up)
         
         var attrStringWithImage : NSAttributedString = NSAttributedString(attachment: textAttachment)
-        attributedString.replaceCharactersInRange(NSMakeRange(count, 0), withAttributedString: attrStringWithImage)
+        attributedString.replaceCharactersInRange(NSMakeRange(count(text), 0), withAttributedString: attrStringWithImage)
         self.inputToolbar?.textView.internalTextView.attributedText = attributedString
     }
     
@@ -111,12 +122,12 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let commentCell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as CommentCell
+        let commentCell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
         
         for subview in commentCell.subviews {
             subview.removeFromSuperview()
         }
-
+        
         let font = UIFont(name: "Helvetica", size: 18.0)
         var height = heightForView(self.tableData[indexPath.row], font: font!, width: 278)
         var label = UILabel(frame: CGRectMake(5, 5, 278, height))
@@ -133,7 +144,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         view.layer.borderColor = UIColor.grayColor().CGColor
         
         commentCell.addSubview(view)
-
+        
         return commentCell
     }
     
@@ -149,7 +160,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
             }
             self.inputToolbar?.textView.maximumNumberOfLines = 4
         }else{
-             r.origin.y = screenFrame.size.width - frameHeight - kStatusBarHeight
+            r.origin.y = screenFrame.size.width - frameHeight - kStatusBarHeight
             if (keyboardIsVisible) {
                 r.origin.y -= kKeyboardHeightLandscape;
             }
@@ -159,7 +170,7 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         self.inputToolbar?.frame = r
     }
     
-    func inputButtonPressed(inputText: NSAttributedString!, fakeClick isFaked: Bool) {
+    func inputButtonPressed(inputText: NSAttributedString!) {
         var index: Int = 0
         if isFinalAnswer{
             self.tableData.insert(inputText, atIndex: 0)
@@ -181,10 +192,10 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
             self.toolbar?.frame = toolbarFrame
         }
     }
-
+    
     func btnFinalAnswerClicked(sender: AnyObject) {
         isFinalAnswer = !isFinalAnswer
-        var button : UIBarButtonItem = sender as UIBarButtonItem
+        var button : UIBarButtonItem = sender as! UIBarButtonItem
         if isFinalAnswer{
             button.tintColor = UIColor.greenColor()
         }else{
@@ -207,9 +218,15 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
             frame.origin.y = self.view.frame.size.width - frame.size.height - kKeyboardHeightLandscape - kStatusBarHeight
         }
         self.inputToolbar?.frame = frame;
+        
         var toolbarFrame = self.toolbar?.frame as CGRect!
         toolbarFrame.origin.y = frame.origin.y - kDefaultToolbarHeight;
         self.toolbar?.frame = toolbarFrame
+        
+        var tableViewFrame = self.tblComment.frame as CGRect!
+        tableViewFrame.size.height = self.view.frame.height - tableViewFrame.origin.y - 2*kDefaultToolbarHeight - kKeyboardHeightPortrait
+        self.tblComment.frame = tableViewFrame
+        
         UIView.commitAnimations();
         keyboardIsVisible = true;
     }
@@ -224,15 +241,20 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
             frame.origin.y = self.view.frame.size.width - frame.size.height
         }
         self.inputToolbar?.frame = frame;
+        
         var toolbarFrame = self.toolbar?.frame as CGRect!
         toolbarFrame.origin.y = frame.origin.y - kDefaultToolbarHeight;
         self.toolbar?.frame = toolbarFrame
+        
+        var tableViewFrame = self.tblComment.frame as CGRect!
+        tableViewFrame.size.height = self.view.frame.height - tableViewFrame.origin.y - 2*kDefaultToolbarHeight
+        self.tblComment.frame = tableViewFrame
         UIView.commitAnimations();
         keyboardIsVisible = false;
     }
     
     override func viewWillAppear(animated: Bool) {
-         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
@@ -240,9 +262,8 @@ class ViewController: UIViewController,UITableViewDataSource,BHInputToolbarDeleg
         /* No longer listen for keyboard */
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-
     }
-
-
+    
+    
 }
 

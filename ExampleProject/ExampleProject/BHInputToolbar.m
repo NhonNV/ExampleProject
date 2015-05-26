@@ -27,25 +27,13 @@
 
 @implementation BHInputToolbar
 
--(void)inputButtonPressed:(BOOL) isFaked
-{
-    if ([self.inputDelegate respondsToSelector:@selector(inputButtonPressed:fakeClick:)])
-    {
-        [self.inputDelegate inputButtonPressed:self.textView.internalTextView.attributedText fakeClick:isFaked];
-    }
-
-    /* Remove the keyboard and clear the text */
-    [self.textView resignFirstResponder];
-    [self.textView clearText];
-}
-
 -(void)inputButtonPressed
 {
-    if ([self.inputDelegate respondsToSelector:@selector(inputButtonPressed:fakeClick:)])
+    if ([self.inputDelegate respondsToSelector:@selector(inputButtonPressed:)])
     {
-        [self.inputDelegate inputButtonPressed:self.textView.internalTextView.attributedText fakeClick:NO];
+        [self.inputDelegate inputButtonPressed:self.textView.internalTextView.attributedText];
     }
-    
+
     /* Remove the keyboard and clear the text */
     [self.textView resignFirstResponder];
     [self.textView clearText];
@@ -123,7 +111,7 @@
 }
 
 - (void) fakeClick{
-    [self inputButtonPressed:YES];
+    [self inputButtonPressed];
 }
 
 - (void) toggleAction{
